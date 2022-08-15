@@ -3,17 +3,24 @@ import axios from "axios";
 
 function App() {
 	const [data, setData] = React.useState();
-	const url = "http://127.0.0.1:8000";
+	const text = React.useRef(null);
+	var t;
+	const url = "http://127.0.0.1:4000";
+
 
 	const GetData = () => {
-		axios.get(url).then((res) => {
+		console.log(text.current.value);
+		axios.get(url + "/test/", { params: { query: text.current.value } }).then((res) => {
 			setData(res.data);
 		});
 	};
+
 	return (
 		<div>
+			<input ref={text} type="text" />
 			<div>ここに処理を書いていきます</div>
-			{data ? <div>{data.Hello}</div> : <button onClick={GetData}>データを取得</button>}
+			<button onClick={GetData}>データを取得</button>
+			<div>{data}</div>
 		</div>
 	);
 }
